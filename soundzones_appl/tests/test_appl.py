@@ -16,12 +16,12 @@ class TestSZP:
         self.szc = SoundZoneClient()
 
     def test_check_conn(self):
-        server = threading.Thread(target=self.szs.receive)
-        client = threading.Thread(target=self.szc.send)
+        client = threading.Thread(target=self.szc.receive)
+        server = threading.Thread(target=self.szs.send, args=("Hello World",))
 
-        server.start()
-        time.sleep(1)
         client.start()
+        time.sleep(1)
+        server.start()
 
 
 if __name__ == "__main__":

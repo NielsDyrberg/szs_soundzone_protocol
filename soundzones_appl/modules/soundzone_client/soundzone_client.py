@@ -8,16 +8,17 @@ class SoundZoneClient:
     def __init__(self):
         # obj of szp
         self.szp = SoundZoneProtocol()
-        # setup socket
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((socket.gethostname(), self.szp.port))
 
-    def send(self):
-        msg = self.s.recv(self.szp.buffer_len)
-        msg = msg.decode("utf-8")
-        print(msg)
-        return msg
+    def receive(self):
+        """
+        Configures the client to accept incoming connections, and the recieved the msg.
+        :return: None (Maybe msg eventually)
+        """
+        self.szp.open_port()
+        self.szp.receive()
 
 
 if __name__ == "__main__":
-    pass
+    test_obj = SoundZoneClient()
+    test_obj.receive()
+

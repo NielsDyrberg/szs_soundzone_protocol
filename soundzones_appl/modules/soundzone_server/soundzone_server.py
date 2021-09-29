@@ -6,18 +6,28 @@ from modules.soundzone_protocol import SoundZoneProtocol
 class SoundZoneServer:
     def __init__(self):
         # obj of szp
-        szp = SoundZoneProtocol()
+        self.szp = SoundZoneProtocol()
 
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.bind((socket.gethostname(), szp.port))
-        self.s.listen(5)
+    def send(self, msg):
+        """
+        Makes the server connect to the client and then sends the msg.
+        :param msg: Message to send
+        :return: None (Maybe eventually a ack)
+        """
+        self.szp.connect()
+        self.szp.send(msg)
 
-    def receive(self):
-        while True:
-            clientsocket, address = self.s.accept()
-            print(f"Connection from {address} has been established!")
-            clientsocket.send(bytes("Welcome to the server!", "utf-8"))
+    def send_to(self, msg, address):
+        """
+        (Future development)
+        Sends message to specific address
+        :param msg: Message to send
+        :param address: Ip address of where to send
+        :return: None (Maybe eventually a ack)
+        """
+        pass
 
 
 if __name__ == "__main__":
-    pass
+    test_obj = SoundZoneServer()
+    test_obj.send("Hello World")
