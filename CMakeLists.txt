@@ -21,3 +21,14 @@ target_sources(${PROJECT_NAME} INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/x01_send_sound_packet.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/xF1_check_connection.cpp
         )
+
+##########################################################################################
+###########################   Add subdirectories   #######################################
+##########################################################################################
+
+add_subdirectory(extern)
+
+# Link libraries to project
+target_link_libraries(${PROJECT_NAME} INTERFACE szs_datatransport)
+
+add_subdirectory(tests)
