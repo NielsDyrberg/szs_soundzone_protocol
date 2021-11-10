@@ -22,7 +22,7 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 ## Dependencies
 | Dependency version | Version number |
 |---|---|
-|DataTransport|0.1.1|
+|DataTransport|0.1.3|
 
 ## Main Structure
 
