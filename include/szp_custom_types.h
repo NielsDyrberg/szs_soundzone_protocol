@@ -10,24 +10,25 @@
 enum supported_cid_t: uint8_t {
     cid_send_sound_packet = 1,
     cid_enroll = 161,
-    cid_setSoundFormat = 179,
-    cid_checkConnection = 241,
+    cid_set_sound_format = 179,
+    cid_check_connection = 241,
     cid_notSet = 255
 };
 
 class buffer_t{
 public:
-    buffer_t(uint8_t* buffer, uint8_t size);
+    buffer_t(uint8_t* buffer, uint16_t size);
     int append(uint8_t byte);
-    int append(const uint8_t* buffer, uint8_t bytes_to_write);
+    int append(const uint8_t* buffer, uint16_t bytes_to_write);
     int read_byte(uint8_t* byte);
-    int get_buffer(uint8_t** buffer, uint8_t* size);
+    int get_written_buffer(uint8_t** buffer, uint16_t* size);
+    int reset();
     int print_buffer();
 private:
     uint8_t* p_buffer;
-    uint8_t buffer_size;
-    uint8_t write_head;
-    uint8_t read_head;
+    uint16_t buffer_size;
+    uint16_t write_head;
+    uint16_t read_head;
 protected:
 };
 

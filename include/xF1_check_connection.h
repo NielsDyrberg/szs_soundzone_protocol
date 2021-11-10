@@ -14,12 +14,13 @@ class xF1_check_connection{
 public:
     xF1_check_connection();
     int set_values(uint8_t value);
+    int reset();
     buffer_t* encode(buffer_t* encoded_msg);
     void decode(buffer_t* buffer);
 
 protected:
 private:
-    uint8_t acknowledgment;
+    uint8_t* acknowledgment;
 
 };
 

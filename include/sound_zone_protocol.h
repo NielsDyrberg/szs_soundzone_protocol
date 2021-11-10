@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstdint>
 
+#include "dataTransport.h"
 #include "xF1_check_connection.h"
 #include "x01_send_sound_packet.h"
 
@@ -15,19 +16,19 @@
 
 class sound_zone_protocol{
 public:
-    sound_zone_protocol();
-    explicit sound_zone_protocol(supported_cid_t cid);
+    sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_size);
     int set_values(uint8_t value);
     int set_values(uint8_t *values, uint8_t size);
     buffer_t* encode(buffer_t* encoded_msg);
     void decode(buffer_t* msg_to_decode);
 
 protected:
+    buffer_t* p_buffer;
     supported_cid_t cid;
-    xF1_check_connection* check_connection;
-    x01_send_sound_packet* send_sound_packet;
+    xF1_check_connection check_connection;
+    x01_send_sound_packet send_sound_packet;
 private:
-    supported_cid_t initial_decode(uint8_t cid);
+    static supported_cid_t initial_decode(uint8_t cid);
 };
 
 #endif //C_SOUNDZONE_CLIENT_SOUND_ZONE_PROTOCOL_H

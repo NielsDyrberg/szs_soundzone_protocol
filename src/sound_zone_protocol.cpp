@@ -4,31 +4,17 @@
 
 #include "sound_zone_protocol.h"
 
+#define PORT 1695
+
 /**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
 
-sound_zone_protocol::sound_zone_protocol() {
+sound_zone_protocol::sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_size) {
     this->cid = cid_notSet;
-    check_connection = nullptr;
-    send_sound_packet = nullptr;
-}
-
-sound_zone_protocol::sound_zone_protocol(supported_cid_t cid) {
-    this->cid = cid;
-    check_connection = nullptr;
-    send_sound_packet = nullptr;
-
-    switch (cid) {
-        case cid_send_sound_packet:
-            send_sound_packet = new x01_send_sound_packet();
-            break;
-        case cid_checkConnection:
-            check_connection = new xF1_check_connection();
-            break;
-        default:
-            break;
-    }
+    check_connection = xF1_check_connection();
+    send_sound_packet = x01_send_sound_packet();
+    this->p_buffer = new buffer_t(comm_buffer, buffer_size);
 }
 
 int sound_zone_protocol::set_values(uint8_t value) {
@@ -36,15 +22,13 @@ int sound_zone_protocol::set_values(uint8_t value) {
         // CID has to be set.
         return -1;
     }
-
     switch (cid) {
-        case cid_checkConnection:
-            check_connection->set_values(value);
+        case cid_check_connection:
+            check_connection.set_values(value);
             break;
         default:
             break;
     }
-
     return 0;
 }
 
@@ -56,9 +40,9 @@ int sound_zone_protocol::set_values(uint8_t *values, uint8_t size){
 
     switch (cid) {
         case cid_send_sound_packet:
-            send_sound_packet->set_values(values, size);
+            send_sound_packet.set_values(values, size);
             break;
-        case cid_checkConnection:
+        case cid_check_connection:
             // Check does not support this
             return -1;
         default:
@@ -69,14 +53,15 @@ int sound_zone_protocol::set_values(uint8_t *values, uint8_t size){
 }
 
 buffer_t* sound_zone_protocol::encode(buffer_t* encoded_msg){
-    encoded_msg->append((uint8_t)cid);
+    encoded_msg->reset();
 
+    encoded_msg->append((uint8_t)cid);
     switch (cid) {
         case cid_send_sound_packet:
-            send_sound_packet->encode(encoded_msg);
+            send_sound_packet.encode(encoded_msg);
             break;
-        case cid_checkConnection:
-            check_connection->encode(encoded_msg);
+        case cid_check_connection:
+            check_connection.encode(encoded_msg);
             break;
         default:
             break;
@@ -92,12 +77,10 @@ void sound_zone_protocol::decode(buffer_t* msg_to_decode){
 
     switch (cid) {
         case cid_send_sound_packet:
-            send_sound_packet = new x01_send_sound_packet();
-            send_sound_packet->decode(msg_to_decode);
+            send_sound_packet.decode(msg_to_decode);
             break;
-        case cid_checkConnection:
-            check_connection = new xF1_check_connection();
-            check_connection->decode(msg_to_decode);
+        case cid_check_connection:
+            check_connection.decode(msg_to_decode);
             break;
         default:
             break;
