@@ -45,13 +45,8 @@ int buffer_t::get_written_buffer(uint8_t** buffer, uint16_t* size) {
     return 0;
 }
 
-int buffer_t::set_new_buffer(uint8_t* buffer, uint16_t size){
-    p_buffer = buffer;
-    buffer_size = size;
-    write_head = 0;
-    read_head = 0;
-
-    return 0;
+uint16_t buffer_t::get_write_head() {
+    return write_head;
 }
 
 int buffer_t::read_byte(uint8_t* byte) {
@@ -65,6 +60,12 @@ int buffer_t::read_byte(uint8_t* byte) {
 
 int buffer_t::reset() {
     write_head = 0;
+    read_head = 0;
+    return 0;
+}
+
+int buffer_t::set_write_head(uint16_t head) {
+    write_head = head;
     read_head = 0;
     return 0;
 }

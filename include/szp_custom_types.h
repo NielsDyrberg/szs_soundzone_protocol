@@ -23,6 +23,8 @@ public:
     int read_byte(uint8_t* byte);
     int get_written_buffer(uint8_t** buffer, uint16_t* size);
     int reset();
+    int set_write_head(uint16_t head);
+    uint16_t get_write_head();
     int print_buffer();
 private:
     uint8_t* p_buffer;

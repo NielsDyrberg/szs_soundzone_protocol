@@ -6,51 +6,53 @@
 
 #define PORT 1695
 
-SZP_slave::SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size) : sound_zone_protocol(comm_buffer, buffer_size), dt(port) {
+/**********************************************************************************************************************
+ * Public methods
+ **********************************************************************************************************************/
+
+SZP_slave::SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size) : sound_zone_protocol(comm_buffer, buffer_size), dt(port, comm_buffer, buffer_size) {
 
 }
 
-int SZP_slave::check_connection() {
-    uint8_t* tmp_p_buffer;
-    uint16_t tmp_buffer_size;
+/**********************************************************************************************************************/
+
+int SZP_slave::recieve() {
+    uint16_t tmp_msg_size;
 
     if (dt.receive(false) > 0) {
-        tmp_p_buffer = dt.GetBuffer(tmp_p_buffer, &tmp_buffer_size);
-        p_buffer->set_new_buffer(tmp_p_buffer, tmp_buffer_size);
-        SZP_slave::decode(p_buffer);
-        if(cid == cid_check_connection){
-            SZP_slave::set_values(0x01);
-            SZP_slave::encode(p_buffer);
-        }
-    }
+        tmp_msg_size = dt.get_buffer();
+        p_buffer->set_write_head(tmp_msg_size);
 
-    SZP_slave::cid = cid_check_connection;
-    SZP_slave::encode(p_buffer);
-    p_buffer->get_written_buffer(&tmp_p_buffer, &tmp_buffer_size);
+        /* Debug start */
+        p_buffer->print_buffer();
+        /* Debug end */
 
-    if(dt.send_and_receive(tmp_p_buffer, tmp_buffer_size) > 0) {
-        tmp_p_buffer = dt.GetBuffer(tmp_p_buffer, &tmp_buffer_size);
-        for (int i = 0; i < tmp_buffer_size; i++) {
-            std::cout << unsigned(*tmp_p_buffer) << std::endl;
-            tmp_p_buffer++;
-        }
+        react_on_incoming();
     }
     return 0;
 }
 
+/**********************************************************************************************************************
+ * Private methods
+ **********************************************************************************************************************/
 
-while (true) {
-    if (dt.receive(false) > 0) {
-        bufPTR = dt.GetBuffer(bufPTR, &size);
-        if (*bufPTR == 0x50) {
-        dt.send(msg, sizeof(msg));
-    }
-    for (int i = 0; i < size; i++) {
-        std::cout << unsigned(*bufPTR) << std::endl;
-        bufPTR++;
-    }
-    std::cout << "data" << std::endl;
-    } else{
-        std::cout << "Client rerun" << std::endl;
+int SZP_slave::encode_and_send() {
+    uint16_t tmp_msg_size;
+    tmp_msg_size = sound_zone_protocol::encode_and_send();
+    return dt.send(tmp_msg_size);
+}
+
+int SZP_slave::react_on_incoming() {
+    decode(p_buffer);
+    switch (cid) {
+        case cid_check_connection:
+            set_values(0x01);
+            encode_and_send();
+            return 0;
+        case cid_send_sound_packet:
+            return 0;
+        default:
+            return -1;
     }
 }
+

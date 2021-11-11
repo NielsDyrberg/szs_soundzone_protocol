@@ -2,7 +2,7 @@
 # Initial defs
 ############################################################
 cmake_minimum_required(VERSION 3.16) # CMake version check
-project(szs_soundzone_protocol VERSION 0.0.2) # Create project "szs_soundzone_protocol"
+project(szs_soundzone_protocol VERSION 0.0.3) # Create project "szs_soundzone_protocol"
 
 ##########################################################################################
 ##########################################################################################

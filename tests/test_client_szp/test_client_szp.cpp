@@ -6,9 +6,16 @@
 
 #include "szp_slave.h"
 
-void test_recv_packet(){
-    SZP_slave szp;
-    std::cout << " " << std::endl;
+#define BUFFER_SIZE 1028
+uint16_t comm_size = BUFFER_SIZE;
+uint8_t comm_buffer[BUFFER_SIZE] = {0};
+
+[[noreturn]] void test_recv_packet(){
+    SZP_slave szp(comm_buffer, comm_size);
+    while (true){
+        szp.recieve();
+        std::cout << "Rerun slave" << std::endl;
+    }
 }
 
 int main(){

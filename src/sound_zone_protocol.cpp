@@ -17,6 +17,8 @@ sound_zone_protocol::sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_s
     this->p_buffer = new buffer_t(comm_buffer, buffer_size);
 }
 
+/**********************************************************************************************************************/
+
 int sound_zone_protocol::set_values(uint8_t value) {
     if(cid == cid_notSet){
         // CID has to be set.
@@ -32,6 +34,8 @@ int sound_zone_protocol::set_values(uint8_t value) {
     return 0;
 }
 
+/**********************************************************************************************************************/
+
 int sound_zone_protocol::set_values(uint8_t *values, uint8_t size){
     if(cid == cid_notSet){
         // CID has to be set.
@@ -41,16 +45,13 @@ int sound_zone_protocol::set_values(uint8_t *values, uint8_t size){
     switch (cid) {
         case cid_send_sound_packet:
             send_sound_packet.set_values(values, size);
-            break;
-        case cid_check_connection:
-            // Check does not support this
-            return -1;
+            return 0;
         default:
-            break;
+            return -1;
     }
-
-    return 0;
 }
+
+/**********************************************************************************************************************/
 
 buffer_t* sound_zone_protocol::encode(buffer_t* encoded_msg){
     encoded_msg->reset();
@@ -69,6 +70,8 @@ buffer_t* sound_zone_protocol::encode(buffer_t* encoded_msg){
 
     return encoded_msg;
 }
+
+/**********************************************************************************************************************/
 
 void sound_zone_protocol::decode(buffer_t* msg_to_decode){
     uint8_t tmp_cid;
@@ -91,6 +94,16 @@ void sound_zone_protocol::decode(buffer_t* msg_to_decode){
 }
 
 /**********************************************************************************************************************
+ * Protected methods
+ **********************************************************************************************************************/
+
+uint16_t sound_zone_protocol::encode_and_send() {
+    uint16_t tmp_msg_size;
+    encode(p_buffer);
+    return p_buffer->get_write_head();
+}
+
+/**********************************************************************************************************************
  * Private methods
  **********************************************************************************************************************/
 
@@ -100,3 +113,6 @@ supported_cid_t sound_zone_protocol::initial_decode(uint8_t cid) {
 
     return tmp_cid;
 }
+
+/**********************************************************************************************************************/
+

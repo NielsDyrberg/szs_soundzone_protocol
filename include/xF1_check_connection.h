@@ -20,7 +20,7 @@ public:
 
 protected:
 private:
-    uint8_t* acknowledgment;
+    uint8_t acknowledgment;
 
 };
 

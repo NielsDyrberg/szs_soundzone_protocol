@@ -27,6 +27,7 @@ protected:
     supported_cid_t cid;
     xF1_check_connection check_connection;
     x01_send_sound_packet send_sound_packet;
+    uint16_t encode_and_send();
 private:
     static supported_cid_t initial_decode(uint8_t cid);
 };

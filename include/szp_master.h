@@ -13,6 +13,7 @@ public:
     SZP_master(char *host, bool is_ip, uint8_t *comm_buffer, uint16_t buffer_size);
 
     int check_connection();
+    int send_sound_packet(uint8_t* packet, uint16_t packet_size);
 protected:
 
 

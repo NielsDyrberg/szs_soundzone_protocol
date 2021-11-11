@@ -15,12 +15,15 @@ class SZP_slave: public sound_zone_protocol{
 public:
     SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size);
 
-    int check_connection();
+    int recieve();
 protected:
+
 
 
 private:
     UDP_server dt;
+    int encode_and_send();
+    int react_on_incoming();
 
 };
 

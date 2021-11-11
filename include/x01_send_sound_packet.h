@@ -15,7 +15,7 @@ public:
     int set_values(uint8_t *values, uint8_t size);
     buffer_t* encode(buffer_t* encoded_msg);
     void decode(buffer_t* msg_to_decode);
-
+    int reset();
 protected:
 private:
     uint8_t* p_payload;
