@@ -17,6 +17,7 @@
 class sound_zone_protocol{
 public:
     sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_size);
+    int set_fifo(int* fifo_fd);
     int set_values(uint8_t value);
     int set_values(uint8_t *values, uint8_t size);
     buffer_t* encode(buffer_t* encoded_msg);

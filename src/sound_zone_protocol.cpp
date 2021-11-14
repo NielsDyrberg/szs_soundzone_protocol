@@ -4,8 +4,6 @@
 
 #include "sound_zone_protocol.h"
 
-#define PORT 1695
-
 /**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
@@ -15,6 +13,12 @@ sound_zone_protocol::sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_s
     check_connection = xF1_check_connection();
     send_sound_packet = x01_send_sound_packet();
     this->p_buffer = new buffer_t(comm_buffer, buffer_size);
+}
+
+/**********************************************************************************************************************/
+
+int sound_zone_protocol::set_fifo(int* fifo_fd) {
+    return send_sound_packet.set_fifo(fifo_fd);
 }
 
 /**********************************************************************************************************************/
@@ -88,9 +92,6 @@ void sound_zone_protocol::decode(buffer_t* msg_to_decode){
         default:
             break;
     }
-
-    std::cout << "Hello, World!" << std::endl;
-
 }
 
 /**********************************************************************************************************************

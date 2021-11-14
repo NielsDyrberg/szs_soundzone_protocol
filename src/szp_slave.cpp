@@ -2,16 +2,30 @@
 // Created by ncpd on 08-11-2021.
 //
 
-#include "szp_slave.h"
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+#include <iostream>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <cerrno>
+#include <fcntl.h>
 
-#define PORT 1695
+#include "szp_slave.h"
 
 /**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
 
-SZP_slave::SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size) : sound_zone_protocol(comm_buffer, buffer_size), dt(port, comm_buffer, buffer_size) {
+SZP_slave::SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size, char* fifo_name) : sound_zone_protocol(comm_buffer, buffer_size), dt(port, comm_buffer, buffer_size) {
+    this->fifo_name = fifo_name;
+}
 
+int SZP_slave::open_fifo() {
+    int fd;
+    fd = open(fifo_name, O_WRONLY);
+    set_fifo(&fd);
+    return 0;
 }
 
 /**********************************************************************************************************************/
@@ -22,10 +36,6 @@ int SZP_slave::recieve() {
     if (dt.receive(false) > 0) {
         tmp_msg_size = dt.get_buffer();
         p_buffer->set_write_head(tmp_msg_size);
-
-        /* Debug start */
-        p_buffer->print_buffer();
-        /* Debug end */
 
         react_on_incoming();
     }
@@ -41,6 +51,8 @@ int SZP_slave::encode_and_send() {
     tmp_msg_size = sound_zone_protocol::encode_and_send();
     return dt.send(tmp_msg_size);
 }
+
+/**********************************************************************************************************************/
 
 int SZP_slave::react_on_incoming() {
     decode(p_buffer);

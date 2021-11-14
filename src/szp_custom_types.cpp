@@ -2,8 +2,11 @@
 // Created by ncpd on 27-10-2021.
 //
 
-#include "szp_custom_types.h"
 #include <iostream>
+#include <thread>
+
+#include "szp_custom_types.h"
+
 
 buffer_t::buffer_t(uint8_t* buffer, uint16_t size) {
     this->p_buffer = buffer;
@@ -34,9 +37,9 @@ int buffer_t::append(const uint8_t *buffer, uint16_t size) {
     return 0;
 }
 
-int buffer_t::get_written_buffer(uint8_t** buffer, uint16_t* size) {
-    *buffer = p_buffer;
-    *size = write_head;
+int buffer_t::get_buffer_rest(uint8_t** buffer, uint16_t* size) {
+    *buffer = &p_buffer[read_head];
+    *size = write_head-read_head;
 
     if (write_head == 0){
         // Buffer empty
