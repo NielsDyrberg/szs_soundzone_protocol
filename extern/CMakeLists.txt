@@ -1,2 +1,4 @@
 
-add_subdirectory(szs_datatransport)
+if (NOT TARGET szs_datatransport)
+    add_subdirectory(szs_datatransport)
+endif()
