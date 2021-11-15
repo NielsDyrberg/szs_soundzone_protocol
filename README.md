@@ -5,7 +5,7 @@ To compile puml use: (Assuming plantuml you are in the directory)
 plantuml.jar -tsvg readme.md -o sequence_diagrams
 -->
 
-version = 0.0.5
+version = 0.0.6
 
 This file will document SZP.
 
@@ -22,7 +22,7 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 ## Dependencies
 | Dependency version | Version number |
 |---|---|
-|DataTransport|0.1.4|
+|DataTransport|0.2.0|
 
 ## Main Structure
 
