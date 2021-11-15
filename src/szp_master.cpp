@@ -20,6 +20,7 @@ SZP_master::SZP_master(char *host, bool is_ip): sound_zone_protocol(comm_buffer,
 /**********************************************************************************************************************/
 
 int SZP_master::check_connection() {
+    int err;
     uint16_t tmp_buffer_size;
 
     SZP_master::cid = cid_check_connection;
@@ -29,8 +30,10 @@ int SZP_master::check_connection() {
     if(dt.send_and_receive(tmp_buffer_size) > 0) {
         tmp_buffer_size = dt.get_buffer();
         p_buffer->set_write_head(tmp_buffer_size);
-        decode(p_buffer);
-        p_buffer->print_buffer();
+        err = decode(p_buffer);
+        if(err < 0){
+            return -1;
+        }
     }
     return 0;
 }

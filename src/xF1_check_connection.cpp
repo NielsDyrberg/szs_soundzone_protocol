@@ -6,6 +6,8 @@
 
 #define NOT_SET 0xFF
 
+
+
 /**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
@@ -32,8 +34,14 @@ buffer_t* xF1_check_connection::encode(buffer_t* encoded_msg){
     return encoded_msg;
 }
 
-void xF1_check_connection::decode(buffer_t* buffer) {
+int xF1_check_connection::decode(buffer_t* buffer) {
     buffer->read_byte(&acknowledgment);
+
+    if(acknowledgment == NOT_SET){
+        return -1;
+    } else{
+        return 0;
+    }
 }
 
 /**********************************************************************************************************************

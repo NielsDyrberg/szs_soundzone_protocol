@@ -22,7 +22,7 @@ public:
     int set_values(uint8_t value);
     int set_values(uint8_t *values, uint16_t size);
     buffer_t* encode(buffer_t* encoded_msg);
-    void decode(buffer_t* msg_to_decode);
+    int decode(buffer_t* msg_to_decode);
 
 protected:
     buffer_t* p_buffer;

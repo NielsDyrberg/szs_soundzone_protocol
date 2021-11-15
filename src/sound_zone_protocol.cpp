@@ -84,21 +84,21 @@ buffer_t* sound_zone_protocol::encode(buffer_t* encoded_msg){
 
 /**********************************************************************************************************************/
 
-void sound_zone_protocol::decode(buffer_t* msg_to_decode){
+int sound_zone_protocol::decode(buffer_t* msg_to_decode){
     uint8_t tmp_cid;
     msg_to_decode->read_byte(&tmp_cid);
     cid = initial_decode(tmp_cid);
 
     switch (cid) {
         case cid_send_sound_packet:
-            send_sound_packet->decode(msg_to_decode);
+            (void)send_sound_packet->decode(msg_to_decode);
             break;
         case cid_check_connection:
-            check_connection->decode(msg_to_decode);
-            break;
+            return check_connection->decode(msg_to_decode);
         default:
-            break;
+            return -1;
     }
+    return 0;
 }
 
 /**********************************************************************************************************************

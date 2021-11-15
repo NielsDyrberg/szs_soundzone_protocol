@@ -16,7 +16,7 @@ public:
     int set_values(uint8_t value);
     int reset();
     buffer_t* encode(buffer_t* encoded_msg);
-    void decode(buffer_t* buffer);
+    int decode(buffer_t* buffer);
 
 protected:
 private:
