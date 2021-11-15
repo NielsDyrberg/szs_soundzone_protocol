@@ -9,11 +9,13 @@
 #include "sound_zone_protocol.h"
 #include "udp_server.h"
 
+#define COMM_BUFFER_SIZE 4096
+
 static int port = 1695;
 
 class SZP_slave: public sound_zone_protocol{
 public:
-    SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size, char* fifo_name);
+    SZP_slave(char* fifo_name);
     int open_fifo();
     int recieve();
 
@@ -22,6 +24,7 @@ protected:
 private:
     UDP_server dt;
     char* fifo_name;
+    uint8_t comm_buffer[COMM_BUFFER_SIZE] = {};
 
     int encode_and_send();
     int react_on_incoming();

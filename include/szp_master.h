@@ -23,7 +23,7 @@ protected:
 
 private:
     UDP_client dt;
-    uint8_t comm_buffer[COMM_BUFFER_SIZE];
+    uint8_t comm_buffer[COMM_BUFFER_SIZE] = {};
 
 
 };

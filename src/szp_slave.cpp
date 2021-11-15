@@ -17,7 +17,7 @@
  * Public methods
  **********************************************************************************************************************/
 
-SZP_slave::SZP_slave(uint8_t *comm_buffer, uint16_t buffer_size, char* fifo_name) : sound_zone_protocol(comm_buffer, buffer_size), dt(port, comm_buffer, buffer_size) {
+SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(port, comm_buffer, COMM_BUFFER_SIZE) {
     this->fifo_name = fifo_name;
 }
 
