@@ -14,9 +14,7 @@ static unsigned int port = 1695;
 
 SZP_master::SZP_master()= default;
 
-SZP_master::SZP_master(char *host, bool is_ip, uint8_t *comm_buffer,
-                       uint16_t buffer_size) : sound_zone_protocol(comm_buffer, buffer_size), dt(host, port, is_ip, comm_buffer, buffer_size) {
-
+SZP_master::SZP_master(char *host, bool is_ip): sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(host, port, is_ip, comm_buffer, COMM_BUFFER_SIZE) {
 }
 
 /**********************************************************************************************************************/
