@@ -22,12 +22,12 @@ x01_send_sound_packet::x01_send_sound_packet() {
     payload_size = 0;
 };
 
-int x01_send_sound_packet::set_fifo(int *fifo_fd) {
+int x01_send_sound_packet::set_fifo(const int *fifo_fd) {
     this->fifo_fd = *fifo_fd;
     return 0;
 }
 
-int x01_send_sound_packet::set_values(uint8_t *values, uint8_t size) {
+int x01_send_sound_packet::set_values(uint8_t *values, uint16_t size) {
     p_payload = values;
     payload_size = size;
     return 0;

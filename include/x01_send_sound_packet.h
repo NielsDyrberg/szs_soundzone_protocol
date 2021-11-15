@@ -12,15 +12,15 @@
 class x01_send_sound_packet{
 public:
     x01_send_sound_packet();
-    int set_fifo(int* fifo_fd);
-    int set_values(uint8_t *values, uint8_t size);
+    int set_fifo(const int* fifo_fd);
+    int set_values(uint8_t *values, uint16_t size);
     buffer_t* encode(buffer_t* encoded_msg);
     void decode(buffer_t* msg_to_decode);
     int reset();
 protected:
 private:
     uint8_t* p_payload;
-    uint8_t payload_size;
+    uint16_t payload_size;
     int fifo_fd;
 };
 

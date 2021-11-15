@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+
 #include "szp_master.h"
 
 static unsigned int port = 1695;
@@ -11,8 +12,11 @@ static unsigned int port = 1695;
  * Public methods
  **********************************************************************************************************************/
 
+SZP_master::SZP_master()= default;
+
 SZP_master::SZP_master(char *host, bool is_ip, uint8_t *comm_buffer,
                        uint16_t buffer_size) : sound_zone_protocol(comm_buffer, buffer_size), dt(host, port, is_ip, comm_buffer, buffer_size) {
+
 }
 
 /**********************************************************************************************************************/
@@ -33,18 +37,20 @@ int SZP_master::check_connection() {
     return 0;
 }
 
-int SZP_master::send_sound_packet(uint8_t* packet, uint16_t packet_size) {
-    uint16_t tmp_buffer_size;
-
+int SZP_master::send_sound_packet(uint8_t* buffer, uint16_t packet_size) {
+    uint16_t tmp_buffer_size = 0;
     cid = cid_send_sound_packet;
-    set_values(packet, packet_size);
+
+        // todo Add song filtration here
+
+    set_values(buffer, packet_size);
     encode(p_buffer);
+
     tmp_buffer_size = p_buffer->get_write_head();
 
-    if(dt.send(tmp_buffer_size) > 0) {
-        /* Debug start */
-        std::cout << "Sent packet" << std::endl;
-        /* Debug end */
+    if(dt.send(tmp_buffer_size) < 0) {
+        // Todo handle send failed.
+        return -1;
     }
     return 0;
 }
