@@ -16,6 +16,7 @@ static int port = 1695;
 class SZP_slave: public sound_zone_protocol{
 public:
     SZP_slave(char* fifo_name);
+    ~SZP_slave();
     int open_fifo();
     int recieve();
 

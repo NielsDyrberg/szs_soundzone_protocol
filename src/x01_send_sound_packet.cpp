@@ -2,6 +2,10 @@
 // Created by ncpd on 27-10-2021.
 //
 
+/**********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
@@ -10,7 +14,18 @@
 
 #include "x01_send_sound_packet.h"
 
+/**********************************************************************************************************************
+ * Defines
+ **********************************************************************************************************************/
+
 #define PAYLOAD_SIZE 100
+
+#define DEBUG_X01
+
+#ifdef DEBUG_X01
+#include "debug_methods.h"
+debug_write_file* debugger;
+#endif
 
 /**********************************************************************************************************************
  * Public methods
@@ -20,6 +35,11 @@ x01_send_sound_packet::x01_send_sound_packet() {
     this->p_payload = nullptr;
     this->fifo_fd = 0;
     payload_size = 0;
+
+#ifdef DEBUG_X01
+    debugger = new debug_write_file();
+#endif
+
 };
 
 int x01_send_sound_packet::set_fifo(const int *fifo_fd) {
@@ -52,7 +72,11 @@ void x01_send_sound_packet::decode(buffer_t* msg_to_decode) {
     msg_to_decode->get_buffer_rest(&tmp_p_buffer, &tmp_buffer_size);
     msg_to_decode->reset();
 
+#ifdef DEBUG_X01
+    debugger->write(tmp_p_buffer, tmp_buffer_size);
+#else
     write(fifo_fd, tmp_p_buffer, tmp_buffer_size);
+#endif
 }
 
 int x01_send_sound_packet::reset() {
