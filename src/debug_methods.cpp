@@ -20,7 +20,7 @@ debug_write_file::~debug_write_file() {
 }
 
 void debug_write_file::write(const uint8_t* buff, int size) {
-    debug_fd.open("/tmp/rcv_debug_file.wav", std::ios::binary | std::ios::app);
+    debug_fd.open("/tmp/rcv_file.wav", std::ios::binary | std::ios::app);
     debug_fd.write((char*)buff, size);
     debug_fd.close();
     packets_received++;
