@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME} INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/szp_custom_types.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/x01_send_sound_packet.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/xF1_check_connection.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/debug_methods.cpp
         )
 
 ##########################################################################################

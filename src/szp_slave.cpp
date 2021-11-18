@@ -2,6 +2,10 @@
 // Created by ncpd on 08-11-2021.
 //
 
+/**********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
@@ -14,8 +18,17 @@
 #include "szp_slave.h"
 
 /**********************************************************************************************************************
+ * Defines
+ **********************************************************************************************************************/
+
+
+/**********************************************************************************************************************
  * Static variables
  **********************************************************************************************************************/
+
+#ifdef DEBUG_SZP_SLAVE
+static int packets_rcv;
+#endif
 
 static dt_type_t type = SZP;
 
@@ -25,7 +38,22 @@ static dt_type_t type = SZP;
 
 SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(type, port, comm_buffer, COMM_BUFFER_SIZE) {
     this->fifo_name = fifo_name;
+
+#ifdef DEBUG_SZP_SLAVE
+    packets_rcv = 0;
+#endif
 }
+
+/**********************************************************************************************************************/
+
+SZP_slave::~SZP_slave() {
+
+#ifdef DEBUG_SZP_SLAVE
+    std::cout << "Packets received: " << packets_rcv << std::endl;
+#endif
+}
+
+/**********************************************************************************************************************/
 
 int SZP_slave::open_fifo() {
     int fd;
@@ -40,6 +68,10 @@ int SZP_slave::recieve() {
     uint16_t tmp_msg_size;
 
     if (dt.receive(false) > 0) {
+#ifdef DEBUG_SZP_SLAVE
+        packets_rcv++;
+        std::cout << "Packets received: " << packets_rcv << std::endl;
+#endif
         tmp_msg_size = dt.get_buffer();
         p_buffer->set_write_head(tmp_msg_size);
 
