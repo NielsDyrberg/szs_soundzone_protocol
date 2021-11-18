@@ -1,6 +1,12 @@
-//
-// Created by ncpd on 08-11-2021.
-//
+/***********************************************************************************************************************
+ * @name SZP_slave
+ * @file szp_slave.cpp
+ * @author Niels Dyrberg
+ * @date 08-11-2021
+ *
+ * Purpose:
+ *      Implement szp_slave class
+ **********************************************************************************************************************/
 
 /**********************************************************************************************************************
  * Includes
@@ -18,25 +24,21 @@
 #include "szp_slave.h"
 
 /**********************************************************************************************************************
- * Defines
- **********************************************************************************************************************/
-
-
-/**********************************************************************************************************************
  * Static variables
  **********************************************************************************************************************/
 
+static int port = 1695;
+static dt_type_t type = SZP;
 #ifdef DEBUG_SZP_SLAVE
 static int packets_rcv;
 #endif
-
-static dt_type_t type = SZP;
 
 /**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
 
-SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(type, port, comm_buffer, COMM_BUFFER_SIZE) {
+SZP_slave::SZP_slave(char *fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE),
+                                        dt(type, port, comm_buffer, COMM_BUFFER_SIZE) {
     this->fifo_name = fifo_name;
 
 #ifdef DEBUG_SZP_SLAVE
@@ -47,7 +49,7 @@ SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BU
 /**********************************************************************************************************************/
 
 SZP_slave::~SZP_slave() {
-
+    // todo should probably destruct something.
 #ifdef DEBUG_SZP_SLAVE
     std::cout << "Packets received: " << packets_rcv << std::endl;
 #endif
@@ -84,14 +86,24 @@ int SZP_slave::recieve() {
  * Private methods
  **********************************************************************************************************************/
 
+/**
+ * @brief Serializes the sound_zone_protocol object and the sends it.
+ * @return int
+ * @retval -1 if errors
+ * @retval The number of bytes sent if successfully.
+ */
 int SZP_slave::encode_and_send() {
     uint16_t tmp_msg_size;
-    tmp_msg_size = sound_zone_protocol::encode_and_send();
+    tmp_msg_size = sound_zone_protocol::encode_and_get_size();
     return dt.send(tmp_msg_size);
 }
 
-/**********************************************************************************************************************/
-
+/**
+ * Reacts on a received message.
+ * @return int
+ * @retval 0 If successful.
+ * @retval -1 If #cid not supported.
+ */
 int SZP_slave::react_on_incoming() {
     decode(p_buffer);
     switch (cid) {

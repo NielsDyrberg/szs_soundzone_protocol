@@ -2,10 +2,10 @@
 # Documentation for SoundZone Protocol
 <!--
 To compile puml use: (Assuming plantuml you are in the directory)
-plantuml.jar -tsvg readme.md -o sequence_diagrams
+plantuml.jar -tsvg README.md -o sequence_diagrams
 -->
 
-version = 0.0.6
+version = 0.1.0
 
 This file will document SZP.
 
@@ -22,7 +22,7 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 ## Dependencies
 | Dependency version | Version number |
 |---|---|
-|DataTransport|0.2.0|
+|DataTransport|0.3.0|
 
 ## Main Structure
 
@@ -51,7 +51,6 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 | Range | Name |
 |---| ---|
 | 0x00 - 0x10 | Normal use |
-| 0xA0 - 0xC0 | Configuration |
 | 0xF0 - 0xFF | Debugging |
 
 ### Command list
@@ -59,9 +58,6 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 |CID | Name | Description |
 |---|---|---|
 | 0x01 | [send_sound_pack](#01---sendsoundpacket) | Send a payload to a client |
-|||
-| 0xA1 | [enroll](#a1---enroll) | Used by client to enroll |
-| 0xB3 | [set_sound_format](#b3---setsoundformat) | Sets the format of the music |
 |||
 | 0xF1 | [check_connnection](#f1---checkconnetion) | Used to check connection, used for debug |
 
@@ -89,71 +85,6 @@ server -> client: [ cid, time, payload ]
 
 ---
 
-## A1 - enroll
-To use this command, client has been preconfigured with an Id.
-So the rigth filter is used for the right Id.
-
-In order for the client to be configured with an Id, it has to be planned where each client is located in the room, the master should then have the plan so it knows where wich id is located.
-A client is then configured according to where it is located. And then uses this Id to enroll.
-
-
-| Tag | Size [bytes] | Value | Description |
-|---|---|---|---|
-| cid | 1 | 0xA1 | Command Id |
-|  client_id | 1 | 0x01-0xFF | Assigned client id (0 is reserved for server) |
-| res | 1 | 0 or 1 | denie or accept |
-
-<!--
-```
-@startuml A1_enrole_c
-server <- client: [ cid, client_id ]
-server -> client: [ cid, res ]
-@enduml
-```
--->
-
-![](sequence_diagrams/A1_enrole_c.svg)
-
----
-
-## B3 - set_sound_format
-Sets sound format.
-
-| Tag | Size [bytes] | Value | Description |
-|---|---|---|---|
-| cid | 1 | 0xB3 | Command Id |
-| format_id | 1 | 0x01-0x04 | Payload format type. Supported types can be found under [supported formats](#supported-formats) |
-| raw_setup | 3 | - | (Only used if format_id == 0x01) Bytes describing how to handle the Raw file. Described in [raw_setup](#rawsetup) |
-
-<!--
-```
-@startuml B3_set_sound_format
-server -> client: [ cid, format_id, (raw_setup) ]
-@enduml
-```
--->
-
-![](sequence_diagrams/B3_set_sound_format.svg)
-
-### Supported formats
-| Id | Name | Notes |
-|--- |--- |---|
-| 0x01 | Raw | Raw only supports Mono |
-| 0x02 | WAV ||
-| 0x03 | FLAC||
-| 0x04 | PCM ||
-
-### raw_setup
-
-[ sample_rate, sample_resolution ]
-
-| Name | Size [Bytes] | Value | Description | Notes |
-| ---|---|--- |---|---|
-| sample_rate | 2 | 1200 Hz | Sample rate | Other rates should eventually be supported |
-| sample_resolution | 1 | 16 bits | Number of bits per sample | Eventually other resolutions could be supported |
-
----
-
 ## F1 - check_connection
 Used the ckeck Connection on SZP level
 
@@ -174,3 +105,174 @@ end
 -->
 
 ![](sequence_diagrams/F1_check_con.svg)
+
+---
+
+## Class diagrams
+
+### SZP
+
+<!--
+```
+@startuml class_diagram
+
+package SZP {
+    SZP_master --o sound_zone_protocol
+    SZP_slave --o sound_zone_protocol
+
+    package sound_zone_protocol {
+    sound_zone_protocol --* x01_send_sound_packet
+    sound_zone_protocol --* xF1_check_connection
+    sound_zone_protocol --* szp_custom_types
+    x01_send_sound_packet --* Time : Not implemented yet
+
+    package szp_custom_types{
+        enum supported_cid_t{}
+        class buffer_t{}
+    }
+    }
+}
+
+package DataTransport{
+    SZP_master --* UDP_client
+    SZP_slave --* UDP_server
+
+    class UDP_client{}
+    class UDP_server{}
+}
+
+class SZP_master{
+    --Private--
+    - UDP_client dt
+    - uint8_t comm_buffer[]
+    ___
+    --Public--
+    + SZP_master()
+    + SZP_master(char *host, bool is_ip)
+    + int check_connection()
+    + int send_sound_packet(uint8_t* buffer, uint16_t packet_size)
+}
+
+class SZP_slave{
+    --Private--
+    - UDP_server dt
+    - char* fifo_name
+    - uint8_t comm_buffer[]
+    ___
+    --Private--
+    - int encode_and_send()
+    - int react_on_incoming()
+    --Public--
+    + SZP_slave(char* fifo_name)
+    + ~SZP_slave()
+    + int open_fifo()
+    + int recieve()
+}
+
+class sound_zone_protocol {
+    --Protected--
+    # buffer_t* p_buffer
+    # supported_cid_t cid
+    # xF1_check_connection* check_connection
+    # x01_send_sound_packet* send_sound_packet
+    ___
+    --Private--
+    - static supported_cid_t initial_decode(uint8_t cid)
+    --Protected--
+    # uint16_t encode_and_send()
+    --Public--
+    + sound_zone_protocol()
+    + sound_zone_protocol(uint8_t* comm_buffer, uint16_t buffer_size)
+    + int set_fifo(int* fifo_fd)
+    + int set_values(uint8_t value)
+    + int set_values(uint8_t *values, uint16_t size)
+    + buffer_t* encode(buffer_t* encoded_msg)
+    + int decode(buffer_t* msg_to_decode)
+}
+
+class x01_send_sound_packet {
+    --Private--
+    - uint8_t* p_payload
+    - uint16_t payload_size
+    - int fifo_fd
+    ___
+    --Public--
+    + x01_send_sound_packet()
+    + int set_fifo(const int* fifo_fd)
+    + int set_values(uint8_t *values, uint16_t size)
+    + buffer_t* encode(buffer_t* encoded_msg)
+    + void decode(buffer_t* msg_to_decode)
+    + int reset()
+}
+
+class xF1_check_connection {
+    --Private--
+    - uint8_t acknowledgment
+    ___
+    --Public--
+    + xF1_check_connection()
+    + int set_values(uint8_t value)
+    + int reset()
+    + buffer_t* encode(buffer_t* encoded_msg)
+    + int decode(buffer_t* buffer)
+}
+
+class Time {
+    + hour
+    + minute
+    + second
+    + mili_second
+    + micro_second
+
+    + encode()
+    + decode( buffer )
+}
+
+@enduml
+```
+-->
+
+
+![](sequence_diagrams/class_diagram.svg)
+
+### SZP_custom_types
+
+<!--
+```
+@startuml class_diagram_custom_types
+
+package szp_custom_types{
+        
+        enum supported_cid_t{
+            cid_send_sound_packet = 1
+            cid_enroll = 161
+            cid_set_sound_format = 179
+            cid_check_connection = 241
+            cid_notSet = 255
+        }
+
+        class buffer_t{
+            --Private--
+            - uint8_t* p_buffer
+            - uint16_t buffer_size
+            - uint16_t write_head
+            - uint16_t read_head
+            --Public--
+            + buffer_t(uint8_t* buffer, uint16_t size)
+            + int append(uint8_t byte)
+            + int append(const uint8_t* buffer, uint16_t bytes_to_write)
+            + int read_byte(uint8_t* byte)
+            + int get_buffer_rest(uint8_t** buffer, uint16_t* size)
+            + int reset()
+            + int set_write_head(uint16_t head)
+            + uint16_t get_write_head()
+            + int print_buffer()
+        }
+    }
+
+@enduml
+```
+-->
+
+
+![](sequence_diagrams/class_diagram_custom_types.svg)

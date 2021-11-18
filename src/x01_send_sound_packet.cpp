@@ -1,6 +1,12 @@
-//
-// Created by ncpd on 27-10-2021.
-//
+/***********************************************************************************************************************
+ * @name x01 Send sound-packet
+ * @file x01_send_sound_packet.cpp
+ * @author Niels Dyrberg
+ * @date 27-10-2021
+ *
+ * Purpose:
+ *      Implement sound_zone_protocol class
+ **********************************************************************************************************************/
 
 /**********************************************************************************************************************
  * Includes
@@ -23,8 +29,10 @@
 #define DEBUG_X01
 
 #ifdef DEBUG_X01
+
 #include "debug_methods.h"
-debug_write_file* debugger;
+
+debug_write_file *debugger;
 #endif
 
 /**********************************************************************************************************************
@@ -42,10 +50,14 @@ x01_send_sound_packet::x01_send_sound_packet() {
 
 };
 
+/**********************************************************************************************************************/
+
 int x01_send_sound_packet::set_fifo(const int *fifo_fd) {
     this->fifo_fd = *fifo_fd;
     return 0;
 }
+
+/**********************************************************************************************************************/
 
 int x01_send_sound_packet::set_values(uint8_t *values, uint16_t size) {
     p_payload = values;
@@ -53,18 +65,22 @@ int x01_send_sound_packet::set_values(uint8_t *values, uint16_t size) {
     return 0;
 }
 
-buffer_t* x01_send_sound_packet::encode(buffer_t* encoded_msg){
-    for (int i = 0; i < payload_size; i++){
+/**********************************************************************************************************************/
+
+buffer_t *x01_send_sound_packet::encode(buffer_t *encoded_msg) {
+    for (int i = 0; i < payload_size; i++) {
         encoded_msg->append(p_payload[i]);
     }
     return encoded_msg;
 }
 
-void x01_send_sound_packet::decode(buffer_t* msg_to_decode) {
-    uint8_t* tmp_p_buffer = nullptr;
+/**********************************************************************************************************************/
+
+void x01_send_sound_packet::decode(buffer_t *msg_to_decode) {
+    uint8_t *tmp_p_buffer = nullptr;
     uint16_t tmp_buffer_size = 0;
 
-    if(fifo_fd == 0){
+    if (fifo_fd == 0) {
         std::cout << "p_fifo_fd not set, [x01_send_sound_packet, encode(buffer_t* encoded_msg)]" << std::endl;
     }
 
