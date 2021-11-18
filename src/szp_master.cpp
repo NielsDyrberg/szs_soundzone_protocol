@@ -5,8 +5,12 @@
 #include <iostream>
 
 #include "szp_master.h"
+/**********************************************************************************************************************
+ * Static variables
+ **********************************************************************************************************************/
 
 static unsigned int port = 1695;
+dt_type_t type = SZP;
 
 /**********************************************************************************************************************
  * Public methods
@@ -14,7 +18,7 @@ static unsigned int port = 1695;
 
 SZP_master::SZP_master()= default;
 
-SZP_master::SZP_master(char *host, bool is_ip): sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(host, port, is_ip, comm_buffer, COMM_BUFFER_SIZE) {
+SZP_master::SZP_master(char *host, bool is_ip): sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(type, host, port, is_ip, comm_buffer, COMM_BUFFER_SIZE) {
 }
 
 /**********************************************************************************************************************/

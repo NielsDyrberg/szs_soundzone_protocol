@@ -14,10 +14,16 @@
 #include "szp_slave.h"
 
 /**********************************************************************************************************************
+ * Static variables
+ **********************************************************************************************************************/
+
+dt_type_t type = SZP;
+
+/**********************************************************************************************************************
  * Public methods
  **********************************************************************************************************************/
 
-SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(port, comm_buffer, COMM_BUFFER_SIZE) {
+SZP_slave::SZP_slave(char* fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE), dt(type, port, comm_buffer, COMM_BUFFER_SIZE) {
     this->fifo_name = fifo_name;
 }
 
