@@ -110,9 +110,6 @@ buffer_t *sound_zone_protocol::encode(buffer_t *encoded_msg) {
         default:
             break;
     }
-
-    encoded_msg->print_buffer();
-
     return encoded_msg;
 }
 

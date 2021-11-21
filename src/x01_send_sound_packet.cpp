@@ -126,10 +126,6 @@ void x01_send_sound_packet::decode(buffer_t *msg_to_decode) {
     msg_to_decode->reset();
 
 #ifdef DEBUG_X01
-    for (int i = 0; i < tmp_buffer_size; i++) {
-        std::cout << unsigned(tmp_p_buffer[i]) << " ";
-    }
-    std::cout << std::endl;
     debugger->write(tmp_p_buffer, tmp_buffer_size);
 #else
     write(fifo_fd, tmp_p_buffer, tmp_buffer_size);
