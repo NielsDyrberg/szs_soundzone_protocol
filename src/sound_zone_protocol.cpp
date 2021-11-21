@@ -139,6 +139,27 @@ int sound_zone_protocol::decode(buffer_t *msg_to_decode) {
  * Protected methods
  **********************************************************************************************************************/
 
+int sound_zone_protocol::get_values(long long int *value) {
+    int err = 0;
+    if (cid == cid_notSet) {
+        // CID has to be set.
+        return -1;
+    }
+    switch (cid) {
+        case cid_send_sound_packet:
+            err = send_sound_packet->get_values(value);
+            break;
+        default:
+            return -2;
+    }
+    if (err < 0) {
+        return -3;
+    }
+    return 0;
+}
+
+/**********************************************************************************************************************/
+
 uint16_t sound_zone_protocol::encode_and_get_size() {
     encode(p_buffer);
     return p_buffer->get_write_head();

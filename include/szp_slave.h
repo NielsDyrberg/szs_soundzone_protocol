@@ -54,12 +54,22 @@ public:
      */
     int recieve();
 
+    /**
+     * @brief Getter of #time_to_play.
+     * @param time Pointer where to store the value of #time_to_play.
+     * @return int
+     * @retval 0 If successful.
+     * @retval -1 If time invalid.
+     */
+    int get_time(long long int *time);
+
 protected:
 
 private:
     UDP_server dt;
     char *fifo_name;
     uint8_t comm_buffer[COMM_BUFFER_SIZE] = {};
+    long long int time_to_play;
 
     int encode_and_send();
 

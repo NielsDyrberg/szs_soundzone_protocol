@@ -108,6 +108,18 @@ protected:
     x01_send_sound_packet *send_sound_packet;
 
     /**
+     * @brief Get the package values for the command defined by #cid.
+     * @details Depending on the #cid value is filled.
+     * @param value[in] the LL int value to set.
+     * @return int.
+     * @retval 0 If successful.
+     * @retval -1 If #cid is not set.
+     * @retval -2 If the #cid does not support this type of package value.
+     * @retval -3 If the get_values sub method returns error.
+     */
+    int get_values(long long int *value);
+
+    /**
      * @brief Serializes the SZP object and returns the size.
      * @return uint16_t - size of serialized object.
      */

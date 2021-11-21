@@ -5,7 +5,7 @@ To compile puml use: (Assuming plantuml you are in the directory)
 plantuml.jar -tsvg README.md -o sequence_diagrams
 -->
 
-version = 0.1.0
+version = 0.2.0
 
 This file will document SZP.
 

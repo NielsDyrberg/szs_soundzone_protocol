@@ -20,6 +20,12 @@
 #include "szp_custom_types.h"
 
 /**********************************************************************************************************************
+ * Defines
+ **********************************************************************************************************************/
+
+#define TIME_NOT_SET (long long int)-1
+
+/**********************************************************************************************************************
  * Class declaration
  **********************************************************************************************************************/
 
@@ -60,6 +66,15 @@ public:
      * @return 0
      */
     int set_values(uint8_t *values, uint16_t size);
+
+    /**
+     * Getter of time value.
+     * @param value Pointer where to store time value.
+     * @return int
+     * @retval 0 If successful.
+     * @retval -1 If time is not set.
+     */
+    int get_values(long long int *value);
 
     /**
      * @brief Serializes the x01 object.

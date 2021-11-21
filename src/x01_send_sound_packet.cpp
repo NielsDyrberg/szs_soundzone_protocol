@@ -26,12 +26,13 @@
  **********************************************************************************************************************/
 
 #define PAYLOAD_SIZE 100
-#define TIME_NOT_SET (long long int)-1
 
 #define DEBUG_X01
 
 #ifdef DEBUG_X01
+
 #include "debug_methods.h"
+
 debug_write_file *debugger;
 #endif
 
@@ -66,12 +67,23 @@ int x01_send_sound_packet::set_fifo(const int *fifo_fd) {
 /**********************************************************************************************************************/
 
 int x01_send_sound_packet::set_values(long long int value) {
-    if(value < 0){
+    if (value < 0) {
         std::cout << "Error: value/time < 0, [x01_send_sound_packet.cpp, set_values(long long int value)]" << std::endl;
         return -1;
     }
     time = value;
     return 0;
+}
+
+/**********************************************************************************************************************/
+
+int x01_send_sound_packet::get_values(long long int *value) {
+    int err = 0;
+    if (time == TIME_NOT_SET) {
+        err = -1;
+    }
+    *value = time;
+    return err;
 }
 
 /**********************************************************************************************************************/
@@ -85,7 +97,7 @@ int x01_send_sound_packet::set_values(uint8_t *values, uint16_t size) {
 /**********************************************************************************************************************/
 
 buffer_t *x01_send_sound_packet::encode(buffer_t *encoded_msg) {
-    if(time == TIME_NOT_SET){
+    if (time == TIME_NOT_SET) {
         std::cout << "Error: Time is not set, [x01_send_sound_packet.cpp, encode(buffer_t *encoded_msg)]" << std::endl;
         return encoded_msg;
     }

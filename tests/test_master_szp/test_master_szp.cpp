@@ -6,7 +6,7 @@
 
 #include "szp_master.h"
 
-char slave_1_Ip[] = "192.168.1.46";
+char slave_1_Ip[] = "192.168.1.47";
 
 long long int time_to_play = 0x5930;
 uint8_t msg[] = {3,12,42,3,43,25,23,235,21,162,113,64,0,111};

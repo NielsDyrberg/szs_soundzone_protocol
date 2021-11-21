@@ -40,6 +40,7 @@ static int packets_rcv;
 SZP_slave::SZP_slave(char *fifo_name) : sound_zone_protocol(comm_buffer, COMM_BUFFER_SIZE),
                                         dt(type, port, comm_buffer, COMM_BUFFER_SIZE) {
     this->fifo_name = fifo_name;
+    this->time_to_play = TIME_NOT_SET;
 
 #ifdef DEBUG_SZP_SLAVE
     packets_rcv = 0;
@@ -82,6 +83,16 @@ int SZP_slave::recieve() {
     return 0;
 }
 
+/**********************************************************************************************************************/
+
+int SZP_slave::get_time(long long int *time) {
+    if (time_to_play == TIME_NOT_SET | time_to_play < (long long int) 0) {
+        return -1;
+    }
+    *time = time_to_play;
+    return 0;
+}
+
 /**********************************************************************************************************************
  * Private methods
  **********************************************************************************************************************/
@@ -108,10 +119,11 @@ int SZP_slave::react_on_incoming() {
     decode(p_buffer);
     switch (cid) {
         case cid_check_connection:
-            set_values((uint8_t)0x01);
+            set_values((uint8_t) 0x01);
             encode_and_send();
             return 0;
         case cid_send_sound_packet:
+            get_values(&time_to_play);
             return 0;
         default:
             return -1;
