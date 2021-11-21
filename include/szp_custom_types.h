@@ -52,6 +52,15 @@ public:
     int append(uint8_t byte);
 
     /**
+     * @brief Appends one 'long long int' at the write head.
+     * @param value[in] The int to append.
+     * @return int
+     * @retval 0 If successful
+     * @retval -1 If the buffer is full.
+     */
+    int append(long long int value);
+
+    /**
      * @brief Appends an array at the write head.
      * @details If #buffer is bigger than there is space in buffer_t is will not write any, and just return error.
      * @param buffer[in] The array to append.
@@ -69,7 +78,16 @@ public:
      * @retval 0 If successful.
      * @retval -3 If buffer_t is empty.
      */
-    int read_byte(uint8_t *byte);
+    int read_one(uint8_t *value);
+
+    /**
+     * Reads one 'long long int' from buffer_t.
+     * @param value[uot] Pointer to where to put the read int.
+     * @return int
+     * @retval 0 If successful.
+     * @retval -3 If buffer_t is empty.
+     */
+    int read_one(long long int* value);
 
     /**
      * @brief Used to get the rest of the unread buffer_t.

@@ -34,15 +34,11 @@ As it is a 7th layer protocol, it is treated as a Point-Point communication
 ## Data groups
 
 ### Time Encoding
-[ hh, mm, ss, ms, µs ]
+[ us ]
 
 | Byte| Range | Description | Symbol |
 |---|---|---|---|
-| 1 | [0-23] | Hour | hh |
-| 2 | [ 0-60 ] | Minute | mm |
-| 3 | [ 0-60 ] | Second | ss |
-| 4-5 | [ 0-1000 ] | Mili second | ms |
-| 6-7 | [ 0-1000 ] | Micro second | µs |
+| 0-7 | [0-9.223.372.036.854.775.807] | Micro-second | us |
 
 ## Commands
 
@@ -124,7 +120,6 @@ package SZP {
     sound_zone_protocol --* x01_send_sound_packet
     sound_zone_protocol --* xF1_check_connection
     sound_zone_protocol --* szp_custom_types
-    x01_send_sound_packet --* Time : Not implemented yet
 
     package szp_custom_types{
         enum supported_cid_t{}
@@ -195,10 +190,12 @@ class x01_send_sound_packet {
     - uint8_t* p_payload
     - uint16_t payload_size
     - int fifo_fd
+    - long long int time
     ___
     --Public--
     + x01_send_sound_packet()
     + int set_fifo(const int* fifo_fd)
+    + int set_values(long long int value)
     + int set_values(uint8_t *values, uint16_t size)
     + buffer_t* encode(buffer_t* encoded_msg)
     + void decode(buffer_t* msg_to_decode)
@@ -215,17 +212,6 @@ class xF1_check_connection {
     + int reset()
     + buffer_t* encode(buffer_t* encoded_msg)
     + int decode(buffer_t* buffer)
-}
-
-class Time {
-    + hour
-    + minute
-    + second
-    + mili_second
-    + micro_second
-
-    + encode()
-    + decode( buffer )
 }
 
 @enduml

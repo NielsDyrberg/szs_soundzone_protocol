@@ -24,6 +24,12 @@
  **********************************************************************************************************************/
 
 class x01_send_sound_packet {
+private:
+    uint8_t *p_payload;
+    uint16_t payload_size;
+    int fifo_fd;
+    static long long int time;
+
 public:
     /**
      * Default constructor.
@@ -36,6 +42,16 @@ public:
      * @return 0
      */
     int set_fifo(const int *fifo_fd);
+
+    /**
+     * @brief Sets the #time value.
+     * @details value/time cannot be negative.
+     * @param value[in] Time value in micro-seconds.
+     * @return int
+     * @retval 0 If successful
+     * @retval -1 If value has wrong format.
+     */
+    int set_values(long long int value);
 
     /**
      * @brief Sets the package values for the command.
@@ -63,12 +79,6 @@ public:
      * @return 0
      */
     int reset();
-
-protected:
-private:
-    uint8_t *p_payload;
-    uint16_t payload_size;
-    int fifo_fd;
 };
 
 #endif //C_SOUNDZONE_CLIENT_X01_SEND_SOUND_PACKET_H

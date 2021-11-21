@@ -47,7 +47,7 @@ public:
     /**
      * @brief Does what it says.
      * @details Checks connection by sending a SZP xF1_check_connection to the host. If host returns an ack connection
-     * running.
+     * is running.
      * @return int
      * @retval 0 if good
      * @retval -1 if no ack.
@@ -57,12 +57,13 @@ public:
     /**
      * @brief Sends a SZP sound package to the host.
      * @param buffer[in] Pointer to the sound block to send.
-     * @param packet_size Size of the sound block.
+     * @param packet_size[in] Size of the sound block.
+     * @param play_time[in] The time the sound block sound be played.
      * @return int
      * @retval 0 If successful
      * @retval -1 If send failed.
      */
-    int send_sound_packet(uint8_t *buffer, uint16_t packet_size);
+    int send_sound_packet(uint8_t *buffer, uint16_t packet_size, long long int play_time);
 
 protected:
 

@@ -40,6 +40,7 @@ int sound_zone_protocol::set_fifo(int *fifo_fd) {
     return send_sound_packet->set_fifo(fifo_fd);
 }
 
+
 /**********************************************************************************************************************/
 
 int sound_zone_protocol::set_values(uint8_t value) {
@@ -50,6 +51,24 @@ int sound_zone_protocol::set_values(uint8_t value) {
     switch (cid) {
         case cid_check_connection:
             check_connection->set_values(value);
+            break;
+        default:
+            return -2;
+    }
+    return 0;
+}
+
+
+/**********************************************************************************************************************/
+
+int sound_zone_protocol::set_values(long long int value) {
+    if (cid == cid_notSet) {
+        // CID has to be set.
+        return -1;
+    }
+    switch (cid) {
+        case cid_send_sound_packet:
+            send_sound_packet->set_values(value);
             break;
         default:
             return -2;
@@ -92,6 +111,8 @@ buffer_t *sound_zone_protocol::encode(buffer_t *encoded_msg) {
             break;
     }
 
+    encoded_msg->print_buffer();
+
     return encoded_msg;
 }
 
@@ -99,7 +120,7 @@ buffer_t *sound_zone_protocol::encode(buffer_t *encoded_msg) {
 
 int sound_zone_protocol::decode(buffer_t *msg_to_decode) {
     uint8_t tmp_cid;
-    msg_to_decode->read_byte(&tmp_cid);
+    msg_to_decode->read_one(&tmp_cid);
     cid = initial_decode(tmp_cid);
 
     switch (cid) {

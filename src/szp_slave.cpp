@@ -108,7 +108,7 @@ int SZP_slave::react_on_incoming() {
     decode(p_buffer);
     switch (cid) {
         case cid_check_connection:
-            set_values(0x01);
+            set_values((uint8_t)0x01);
             encode_and_send();
             return 0;
         case cid_send_sound_packet:

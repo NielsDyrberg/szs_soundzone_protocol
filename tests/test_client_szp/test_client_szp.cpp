@@ -6,12 +6,11 @@
 
 #include "szp_slave.h"
 
-#define BUFFER_SIZE 1028
-uint16_t comm_size = BUFFER_SIZE;
-uint8_t comm_buffer[BUFFER_SIZE] = {0};
+char *fifo = "/tmp/rcv_file.wav";
 
 [[noreturn]] void test_recv_packet(){
-    SZP_slave szp(comm_buffer, comm_size);
+    SZP_slave szp(fifo);
+    szp.open_fifo();
     while (true){
         szp.recieve();
         std::cout << "Rerun slave" << std::endl;

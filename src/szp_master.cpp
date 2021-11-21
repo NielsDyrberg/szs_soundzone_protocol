@@ -58,12 +58,13 @@ int SZP_master::check_connection() {
 
 /**********************************************************************************************************************/
 
-int SZP_master::send_sound_packet(uint8_t *buffer, uint16_t packet_size) {
+int SZP_master::send_sound_packet(uint8_t *buffer, uint16_t packet_size, long long int play_time) {
     uint16_t tmp_buffer_size = 0;
     cid = cid_send_sound_packet;
 
     // todo Add song filtration here
 
+    set_values(play_time);
     set_values(buffer, packet_size);
     encode(p_buffer);
 

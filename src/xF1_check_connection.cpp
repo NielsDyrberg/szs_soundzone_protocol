@@ -55,7 +55,7 @@ buffer_t *xF1_check_connection::encode(buffer_t *encoded_msg) {
 /**********************************************************************************************************************/
 
 int xF1_check_connection::decode(buffer_t *buffer) {
-    buffer->read_byte(&acknowledgment);
+    buffer->read_one(&acknowledgment);
 
     if (acknowledgment == NOT_SET) {
         return -1;

@@ -65,6 +65,17 @@ public:
     /**
      * @brief Sets the package values for the command defined by #cid.
      * @details Depending on the #cid values are filled.
+     * @param value[in] the byte value to set.
+     * @return int.
+     * @retval 0 If successful.
+     * @retval -1 If #cid is not set.
+     * @retval -2 If the #cid does not support this type of package value.
+     */
+    int set_values(long long int value);
+
+    /**
+     * @brief Sets the package values for the command defined by #cid.
+     * @details Depending on the #cid values are filled.
      * @param values[in] Pointer to the array of values to set.
      * @param size[in] The size of #values, in bytes.
      * @return int.
