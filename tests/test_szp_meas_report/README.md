@@ -6,6 +6,10 @@ plantuml.jar -tsvg README.md -o diagrams
 
 # Test on the SoundZone-protocol package
 
+This test will measure some key values that will be used to define the values used in the 
+firmware, and some measurements will be used in order to check that it is possible to
+stay within spec. 
+
 ## Todo
 - [ ] Define file corruption
 
@@ -18,7 +22,7 @@ plantuml.jar -tsvg README.md -o diagrams
 | Packet out of order | How many packets arrive out of order |
 | Throughput | The time it takes to send all the data to all slaves |
 
-### Test parameters to adjust
+### Adjustable test parameters
 
 Below the parameters test that has been found relevant will be listed. 
 These parameters will be adjusted different tests, in order to se their effect on 
@@ -75,8 +79,9 @@ server -> client_N: file[block_N]
 
 ## Test iterations
 
-send_delay = [0, 20, 50, 70, 100, 130]
-block_size = [4096, 2048, 1024, 512, 256, 128, 64]
+* send_delay = [0, 20, 50, 70, 100, 130]
+* block_size = [4096, 2048, 1024, 512, 256, 128, 64]
+
 test_iteration(send_delay, block_size)
 
 | Iteration # | send_delay [us] | block_size [Bytes] |
