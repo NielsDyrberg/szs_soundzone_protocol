@@ -112,10 +112,10 @@ In order to make the test, follow the procedure below.
 
 1. Run prepare_measurements.py on your pc. [Description of file](#prepare_measurementspy)
 2. Build the project on all slaves.
-3. Start run executable "test_datatransport_slave" on all slaves
+3. Start run executable "test_qos_szp_slave" on all slaves
 4. Configure the slave ip's in master_main.cpp.
 5. Build the project on the master.
-6. Start target "test_datatransport_master" on the master
+6. Start target "test_qos_szp_master" on the master
 7. Run analyse_measurements.py on yout pc. [Description of file](#analyse_measurementspy).
 
 ### prepare_measurements.py
@@ -146,14 +146,16 @@ server -> client_1: file[block_1]
 hnote over server : send_delay
 server -> client_2: file[block_1]
 hnote over server : send_delay
-server -> client_N: file[block_1]
+...
+server -> client_8: file[block_1]
 hnote over server : send_delay
 ...
-server -> client_1: file[block_N]
+server -> client_1: file[block_end]
 hnote over server : send_delay
-server -> client_2: file[block_N]
+server -> client_2: file[block_end]
 hnote over server : send_delay
-server -> client_N: file[block_N]
+...
+server -> client_8: file[block_end]
 @enduml
 ```
 -->
