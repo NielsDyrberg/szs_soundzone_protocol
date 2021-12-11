@@ -1,0 +1,63 @@
+\doxysection{szp\+\_\+slave.\+h}
+\label{szp__slave_8h_source}\index{C:/Users/ncpd/Documents/GitHub/szs\_soundzone\_protocol/include/szp\_slave.h@{C:/Users/ncpd/Documents/GitHub/szs\_soundzone\_protocol/include/szp\_slave.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/***********************************************************************************************************************}}
+\DoxyCodeLine{2 \textcolor{comment}{ * @name SZP\_slave}}
+\DoxyCodeLine{3 \textcolor{comment}{ * @file szp\_slave.h}}
+\DoxyCodeLine{4 \textcolor{comment}{ * @author Niels Dyrberg}}
+\DoxyCodeLine{5 \textcolor{comment}{ * @date 08-\/11-\/2021}}
+\DoxyCodeLine{6 \textcolor{comment}{ *}}
+\DoxyCodeLine{7 \textcolor{comment}{ * Purpose:}}
+\DoxyCodeLine{8 \textcolor{comment}{ *      Encode/decodes sent/received SZP packages.}}
+\DoxyCodeLine{9 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef SZS\_SOUNDZONE\_PROTOCOL\_SZP\_SLAVE\_H}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define SZS\_SOUNDZONE\_PROTOCOL\_SZP\_SLAVE\_H}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{comment}{/**********************************************************************************************************************}}
+\DoxyCodeLine{15 \textcolor{comment}{ * Includes}}
+\DoxyCodeLine{16 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include "{}sound\_zone\_protocol.h"{}}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include "{}udp\_server.h"{}}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{comment}{/**********************************************************************************************************************}}
+\DoxyCodeLine{22 \textcolor{comment}{ * Defines}}
+\DoxyCodeLine{23 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define COMM\_BUFFER\_SIZE 4096}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{/**********************************************************************************************************************}}
+\DoxyCodeLine{28 \textcolor{comment}{ * Class declaration}}
+\DoxyCodeLine{29 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }SZP\_slave : \textcolor{keyword}{public} sound\_zone\_protocol \{}
+\DoxyCodeLine{32 \textcolor{keyword}{public}:}
+\DoxyCodeLine{37     \textcolor{keyword}{explicit} SZP\_slave(\textcolor{keywordtype}{char} *fifo\_name);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{42     \string~SZP\_slave();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{int} open\_fifo();}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{int} recieve();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{int} get\_time(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int} *time);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{keyword}{private}:}
+\DoxyCodeLine{69     UDP\_server dt;}
+\DoxyCodeLine{70     \textcolor{keywordtype}{char} *fifo\_name;}
+\DoxyCodeLine{71     uint8\_t comm\_buffer[COMM\_BUFFER\_SIZE] = \{\};}
+\DoxyCodeLine{72     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int} time\_to\_play;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{int} encode\_and\_send();}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{88     \textcolor{keywordtype}{int} react\_on\_incoming();}
+\DoxyCodeLine{89 \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//SZS\_SOUNDZONE\_PROTOCOL\_SZP\_SLAVE\_H}}
+
+\end{DoxyCode}

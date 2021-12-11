@@ -1,0 +1,138 @@
+version = 0.\+2.\+0
+
+This file will document SZP.
+
+As it is a 7th layer protocol, it is treated as a Point-\/\+Point communication
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Defines   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Values    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Defines   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Values    }\\\cline{1-2}
+\endhead
+IPv   &IPv4    \\\cline{1-2}
+Transport protocol   &UDP    \\\cline{1-2}
+Port   &1695 ( Seemingly not used )    \\\cline{1-2}
+Endianess   &Big-\/endian    \\\cline{1-2}
+Max length of msg   &1024 bytes   \\\cline{1-2}
+\end{longtabu}
+\doxysection{Dependencies}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md1}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Dependency version   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Version number    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Dependency version   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Version number    }\\\cline{1-2}
+\endhead
+Data\+Transport   &0.\+3.\+0   \\\cline{1-2}
+\end{longtabu}
+\doxysection{Main Structure}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md2}
+[CID, \{payload\} ]
+
+
+\begin{DoxyItemize}
+\item CID -\/ Command Id
+\item payload -\/ Data to send (Structure depends on the CID)
+\end{DoxyItemize}\doxysection{Data groups}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md3}
+\doxysubsection{Time Encoding}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md4}
+[ us ]
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Byte   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Range   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Symbol    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Byte   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Range   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Symbol    }\\\cline{1-4}
+\endhead
+0-\/7   &[0-\/9.\+223.\+372.\+036.\+854.\+775.\+807]   &Micro-\/second   &us   \\\cline{1-4}
+\end{longtabu}
+\doxysection{Commands}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md5}
+\doxysubsection{Command groups}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md6}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Range   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Name    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Range   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Name    }\\\cline{1-2}
+\endhead
+0x00 -\/ 0x10   &Normal use    \\\cline{1-2}
+0x\+F0 -\/ 0x\+FF   &Debugging   \\\cline{1-2}
+\end{longtabu}
+\doxysubsection{Command list}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md7}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ CID   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ CID   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-3}
+\endhead
+0x01   &{\texttt{ send\+\_\+sound\+\_\+pack}}   &Send a payload to a client   \\\cline{1-3}
+\end{longtabu}
+$\vert$$\vert$$\vert$ $\vert$ 0x\+F1 $\vert$ {\texttt{ check\+\_\+connnection}} $\vert$ Used to check connection, used for debug $\vert$
+
+\DoxyHorRuler{0}
+ \DoxyHorRuler{0}
+\doxysection{01 -\/ send\+\_\+sound\+\_\+packet}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md9}
+This command is used to send sound data to the client.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tag   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Size [bytes]   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tag   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Size [bytes]   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-4}
+\endhead
+cid   &1   &0x01   &Command Id    \\\cline{1-4}
+time   &7   &-\/   &Time to play the block of sound    \\\cline{1-4}
+payload   &-\/   &-\/   &Payload   \\\cline{1-4}
+\end{longtabu}
+
+
+
+
+\DoxyHorRuler{0}
+\doxysection{F1 -\/ check\+\_\+connection}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md11}
+Used the ckeck Connection on SZP level
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tag   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Size [bytes]   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Tag   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Size [bytes]   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description    }\\\cline{1-4}
+\endhead
+cid   &1   &0x\+F1   &Command Id    \\\cline{1-4}
+ack   &1   &0x01   &Acknolegment   \\\cline{1-4}
+\end{longtabu}
+
+
+
+
+\DoxyHorRuler{0}
+\doxysection{Class diagrams}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md13}
+\doxysubsection{SZP}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md14}
+\doxysubsection{SZP\+\_\+custom\+\_\+types}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md15}
+\doxysubsection{SZP\+\_\+slave flowchart}\label{md__c___users_ncpd__documents__git_hub_szs_soundzone_protocol__r_e_a_d_m_e_autotoc_md16}
+ 

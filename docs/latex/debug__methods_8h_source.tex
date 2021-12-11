@@ -1,0 +1,45 @@
+\doxysection{debug\+\_\+methods.\+h}
+\label{debug__methods_8h_source}\index{C:/Users/ncpd/Documents/GitHub/szs\_soundzone\_protocol/include/debug\_methods.h@{C:/Users/ncpd/Documents/GitHub/szs\_soundzone\_protocol/include/debug\_methods.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/***********************************************************************************************************************}}
+\DoxyCodeLine{2 \textcolor{comment}{ * @name Debug methods}}
+\DoxyCodeLine{3 \textcolor{comment}{ * @file debug\_methods.h}}
+\DoxyCodeLine{4 \textcolor{comment}{ * @author Niels Dyrberg}}
+\DoxyCodeLine{5 \textcolor{comment}{ * @date 17-\/11-\/2021}}
+\DoxyCodeLine{6 \textcolor{comment}{ *}}
+\DoxyCodeLine{7 \textcolor{comment}{ * Purpose:}}
+\DoxyCodeLine{8 \textcolor{comment}{ *      Should holds the classes and method used for debugging, or patch/temporary solutions.}}
+\DoxyCodeLine{9 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef SOUNDZONE\_CLIENT\_DEBUG\_METHODS\_H}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define SOUNDZONE\_CLIENT\_DEBUG\_METHODS\_H}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{comment}{/**********************************************************************************************************************}}
+\DoxyCodeLine{15 \textcolor{comment}{ * Includes}}
+\DoxyCodeLine{16 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <cstdio>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <cstdlib>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{comment}{/**********************************************************************************************************************}}
+\DoxyCodeLine{24 \textcolor{comment}{ * debug\_write\_file class declaration}}
+\DoxyCodeLine{25 \textcolor{comment}{ **********************************************************************************************************************/}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{class }debug\_write\_file \{}
+\DoxyCodeLine{28 \textcolor{keyword}{private}:}
+\DoxyCodeLine{29     std::ofstream debug\_fd;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{35     debug\_write\_file();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{40     \string~debug\_write\_file();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} write(\textcolor{keyword}{const} uint8\_t *buff, \textcolor{keywordtype}{int} size);}
+\DoxyCodeLine{48 \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//SOUNDZONE\_CLIENT\_DEBUG\_METHODS\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,106 @@
+\doxysection{SZP\+\_\+master Class Reference}
+\label{class_s_z_p__master}\index{SZP\_master@{SZP\_master}}
+Inheritance diagram for SZP\+\_\+master\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_z_p__master}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ SZP\+\_\+master} ()
+\item 
+\textbf{ SZP\+\_\+master} (char $\ast$host, bool is\+\_\+ip)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxyref{SZP\+\_\+master}{p.}{class_s_z_p__master}, host is used to specify the \doxyref{SZP\+\_\+slave}{p.}{class_s_z_p__slave}. \end{DoxyCompactList}\item 
+int \textbf{ check\+\_\+connection} ()
+\begin{DoxyCompactList}\small\item\em Does what it says. \end{DoxyCompactList}\item 
+int \textbf{ send\+\_\+sound\+\_\+packet} (uint8\+\_\+t $\ast$buffer, uint16\+\_\+t packet\+\_\+size, long long int play\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Sends a SZP sound package to the host. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_s_z_p__master_afd578ce5a339d3debaef2b61b682543a}} 
+\index{SZP\_master@{SZP\_master}!SZP\_master@{SZP\_master}}
+\index{SZP\_master@{SZP\_master}!SZP\_master@{SZP\_master}}
+\doxysubsubsection{SZP\_master()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily SZP\+\_\+master\+::\+SZP\+\_\+master (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default constructor for \doxyref{SZP\+\_\+master}{p.}{class_s_z_p__master} \mbox{\label{class_s_z_p__master_a005436df647ac6b0a8d6451a8c9b2ee4}} 
+\index{SZP\_master@{SZP\_master}!SZP\_master@{SZP\_master}}
+\index{SZP\_master@{SZP\_master}!SZP\_master@{SZP\_master}}
+\doxysubsubsection{SZP\_master()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily SZP\+\_\+master\+::\+SZP\+\_\+master (\begin{DoxyParamCaption}\item[{char $\ast$}]{host,  }\item[{bool}]{is\+\_\+ip }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxyref{SZP\+\_\+master}{p.}{class_s_z_p__master}, host is used to specify the \doxyref{SZP\+\_\+slave}{p.}{class_s_z_p__slave}. 
+
+\begin{DoxyNote}{Note}
+Support for hostname not implemented yet. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em host\mbox{[}in\mbox{]}} & Ip or hostname of host. \\
+\hline
+{\em is\+\_\+ip\mbox{[}in\mbox{]}} & Defines if \#host is an IP \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\label{class_s_z_p__master_a63c25ccaeacd164dcb8e6672a31b23e1}} 
+\index{SZP\_master@{SZP\_master}!check\_connection@{check\_connection}}
+\index{check\_connection@{check\_connection}!SZP\_master@{SZP\_master}}
+\doxysubsubsection{check\_connection()}
+{\footnotesize\ttfamily int SZP\+\_\+master\+::check\+\_\+connection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Does what it says. 
+
+Checks connection by sending a SZP \doxyref{x\+F1\+\_\+check\+\_\+connection}{p.}{classx_f1__check__connection} to the host. If host returns an ack connection is running. \begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em 0} & if good \\
+\hline
+{\em -\/1} & if no ack. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{class_s_z_p__master_abf5291efd1e1c306b001265819cf893c}} 
+\index{SZP\_master@{SZP\_master}!send\_sound\_packet@{send\_sound\_packet}}
+\index{send\_sound\_packet@{send\_sound\_packet}!SZP\_master@{SZP\_master}}
+\doxysubsubsection{send\_sound\_packet()}
+{\footnotesize\ttfamily int SZP\+\_\+master\+::send\+\_\+sound\+\_\+packet (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buffer,  }\item[{uint16\+\_\+t}]{packet\+\_\+size,  }\item[{long long int}]{play\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Sends a SZP sound package to the host. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer\mbox{[}in\mbox{]}} & Pointer to the sound block to send. \\
+\hline
+{\em packet\+\_\+size\mbox{[}in\mbox{]}} & Size of the sound block. \\
+\hline
+{\em play\+\_\+time\mbox{[}in\mbox{]}} & The time the sound block sound be played. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em 0} & If successful \\
+\hline
+{\em -\/1} & If send failed. \\
+\hline
+\end{DoxyRetVals}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ncpd/\+Documents/\+Git\+Hub/szs\+\_\+soundzone\+\_\+protocol/include/szp\+\_\+master.\+h\end{DoxyCompactItemize}

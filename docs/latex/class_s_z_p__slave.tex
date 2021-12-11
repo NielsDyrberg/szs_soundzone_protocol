@@ -1,0 +1,100 @@
+\doxysection{SZP\+\_\+slave Class Reference}
+\label{class_s_z_p__slave}\index{SZP\_slave@{SZP\_slave}}
+Inheritance diagram for SZP\+\_\+slave\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_z_p__slave}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ SZP\+\_\+slave} (char $\ast$fifo\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Constructor of \doxyref{SZP\+\_\+slave}{p.}{class_s_z_p__slave}. \end{DoxyCompactList}\item 
+\mbox{\label{class_s_z_p__slave_ab8aea3d195ace6c1e5b038149997cb62}} 
+{\bfseries $\sim$\+SZP\+\_\+slave} ()
+\begin{DoxyCompactList}\small\item\em Does nothing. \end{DoxyCompactList}\item 
+int \textbf{ open\+\_\+fifo} ()
+\begin{DoxyCompactList}\small\item\em Opens the fifo file in write only mode. Hangs until read side is opened. \end{DoxyCompactList}\item 
+int \textbf{ recieve} ()
+\begin{DoxyCompactList}\small\item\em Receives a package from Data\+Transport and the reacts on it. \end{DoxyCompactList}\item 
+int \textbf{ get\+\_\+time} (long long int $\ast$time)
+\begin{DoxyCompactList}\small\item\em Getter of \#time\+\_\+to\+\_\+play. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_s_z_p__slave_a8d81167c0f615d607117a7887b892a13}} 
+\index{SZP\_slave@{SZP\_slave}!SZP\_slave@{SZP\_slave}}
+\index{SZP\_slave@{SZP\_slave}!SZP\_slave@{SZP\_slave}}
+\doxysubsubsection{SZP\_slave()}
+{\footnotesize\ttfamily SZP\+\_\+slave\+::\+SZP\+\_\+slave (\begin{DoxyParamCaption}\item[{char $\ast$}]{fifo\+\_\+name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor of \doxyref{SZP\+\_\+slave}{p.}{class_s_z_p__slave}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fifo\+\_\+name} & Name and path of the fifo buffer to use under x01\+\_\+send\+\_\+sound\+\_\+package. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\label{class_s_z_p__slave_aebf97b03271c3852bf88fe2e970bd4b7}} 
+\index{SZP\_slave@{SZP\_slave}!get\_time@{get\_time}}
+\index{get\_time@{get\_time}!SZP\_slave@{SZP\_slave}}
+\doxysubsubsection{get\_time()}
+{\footnotesize\ttfamily int SZP\+\_\+slave\+::get\+\_\+time (\begin{DoxyParamCaption}\item[{long long int $\ast$}]{time }\end{DoxyParamCaption})}
+
+
+
+Getter of \#time\+\_\+to\+\_\+play. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & Pointer where to store the value of \#time\+\_\+to\+\_\+play. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+\begin{DoxyRetVals}{Return values}
+{\em 0} & If successful. \\
+\hline
+{\em -\/1} & If time invalid. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{class_s_z_p__slave_a59518e5f40f5a15046071e77ae2ca914}} 
+\index{SZP\_slave@{SZP\_slave}!open\_fifo@{open\_fifo}}
+\index{open\_fifo@{open\_fifo}!SZP\_slave@{SZP\_slave}}
+\doxysubsubsection{open\_fifo()}
+{\footnotesize\ttfamily int SZP\+\_\+slave\+::open\+\_\+fifo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Opens the fifo file in write only mode. Hangs until read side is opened. 
+
+\begin{DoxyReturn}{Returns}
+0. 
+\end{DoxyReturn}
+\mbox{\label{class_s_z_p__slave_a2e8af11888eb61d93ecd6271794e7ee5}} 
+\index{SZP\_slave@{SZP\_slave}!recieve@{recieve}}
+\index{recieve@{recieve}!SZP\_slave@{SZP\_slave}}
+\doxysubsubsection{recieve()}
+{\footnotesize\ttfamily int SZP\+\_\+slave\+::recieve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Receives a package from Data\+Transport and the reacts on it. 
+
+Depending on the received package it also responds. \begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ncpd/\+Documents/\+Git\+Hub/szs\+\_\+soundzone\+\_\+protocol/include/szp\+\_\+slave.\+h\end{DoxyCompactItemize}
