@@ -97,24 +97,15 @@ int SZP_slave::get_time(long long int *time) {
  * Private methods
  **********************************************************************************************************************/
 
-/**
- * @brief Serializes the sound_zone_protocol object and the sends it.
- * @return int
- * @retval -1 if errors
- * @retval The number of bytes sent if successfully.
- */
+
 int SZP_slave::encode_and_send() {
     uint16_t tmp_msg_size;
     tmp_msg_size = sound_zone_protocol::encode_and_get_size();
     return dt.send(tmp_msg_size);
 }
 
-/**
- * Reacts on a received message.
- * @return int
- * @retval 0 If successful.
- * @retval -1 If #cid not supported.
- */
+/**********************************************************************************************************************/
+
 int SZP_slave::react_on_incoming() {
     decode(p_buffer);
     switch (cid) {

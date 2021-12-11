@@ -132,6 +132,8 @@ void x01_send_sound_packet::decode(buffer_t *msg_to_decode) {
 #endif
 }
 
+/**********************************************************************************************************************/
+
 int x01_send_sound_packet::reset() {
     p_payload = nullptr;
     payload_size = 0;

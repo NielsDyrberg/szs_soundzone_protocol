@@ -71,8 +71,20 @@ private:
     uint8_t comm_buffer[COMM_BUFFER_SIZE] = {};
     long long int time_to_play;
 
+    /**
+     * @brief Serializes the sound_zone_protocol object and the sends it.
+     * @return int
+     * @retval -1 if errors
+     * @retval The number of bytes sent if successfully.
+     */
     int encode_and_send();
 
+    /**
+     * Reacts on a received message.
+     * @return int
+     * @retval 0 If successful.
+     * @retval -1 If #cid not supported.
+     */
     int react_on_incoming();
 };
 
